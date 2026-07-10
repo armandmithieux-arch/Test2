@@ -78,6 +78,7 @@ body {
     background: transparent;
     color: #777;
     cursor: pointer;
+    display: none;
 }
 
 .zoomable {
@@ -336,6 +337,7 @@ function nextPage() {
 
         // Tentative de lancement de la musique à la page 4
         if (current === 3) {
+            musicButton.style.display = "block";
             music.play().catch(() => {});
         }
     }
