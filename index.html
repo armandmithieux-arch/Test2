@@ -78,6 +78,42 @@ body {
     color: #777;
     cursor: pointer;
 }
+
+.zoomable {
+    cursor: zoom-in;
+    transition: transform .2s;
+}
+
+.zoomable:hover {
+    transform: scale(1.02);
+}
+
+#lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+    z-index: 9999;
+}
+
+#lightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#lightbox img {
+    max-width: 92vw;
+    max-height: 92vh;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(0,0,0,.5);
+}
+
+
 </style>
 
 </head>
@@ -250,10 +286,10 @@ Armand
 
 <div class="page">
     <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:0px;">
-        <img src="IMG1.jpg" style="max-width:50%; border-radius:8px;">
-        <img src="IMG5.jpg" style="max-width:50%; border-radius:8px;">
-        <img src="IMG3.jpg" style="max-width:50%; border-radius:8px;">
-        <img src="IMG4.jpg" style="max-width:50%; border-radius:8px;">
+        <img src="IMG1.jpg" class="zoomable" style="max-width:50%; border-radius:8px;">
+        <img src="IMG5.jpg" class="zoomable" style="max-width:50%; border-radius:8px;">
+        <img src="IMG3.jpg" class="zoomable" style="max-width:50%; border-radius:8px;">
+        <img src="IMG4.jpg" class="zoomable" style="max-width:50%; border-radius:8px;">
     </div>
 </div>
 
@@ -264,6 +300,10 @@ Armand
 1 / 20
 </div>
 
+
+<div id="lightbox">
+    <img src="" alt="">
+</div>
 
 <script>
 
@@ -340,6 +380,35 @@ document.addEventListener("touchend", function(event) {
 
     if (startX - endX > 50) {
         nextPage();
+    }
+
+});
+
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = lightbox.querySelector("img");
+
+document.querySelectorAll(".zoomable").forEach(img => {
+
+    img.addEventListener("click", function () {
+
+        lightboxImg.src = this.src;
+        lightbox.classList.add("active");
+
+    });
+
+});
+
+lightbox.addEventListener("click", function () {
+
+    lightbox.classList.remove("active");
+
+});
+
+document.addEventListener("keydown", function (event) {
+
+    if (event.key === "Escape") {
+        lightbox.classList.remove("active");
     }
 
 });
