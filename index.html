@@ -115,6 +115,23 @@ body {
     box-shadow: 0 0 30px rgba(0,0,0,.5);
 }
 
+.skip-button {
+    margin-top: 30px;
+    padding: 10px 24px;
+    background: transparent;
+    border: 1px solid #888;
+    border-radius: 6px;
+    color: #666;
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all .25s ease;
+}
+
+.skip-button:hover {
+    background: #888;
+    color: #F8F7F3;
+}
 
 </style>
 
@@ -143,13 +160,21 @@ Je te fais confiance.
 </div></div>
 
 
-<div class="page"><div class="text">
-Avant de démarrer, je suis désolé si ce qui va suivre te met mal à l’aise, mais il fallait que je le fasse.<br><br>
+<div class="page">
+    <div class="text">
+        Avant de démarrer, je suis désolé si ce qui va suivre te met mal à l’aise, mais il fallait que je le fasse.<br><br>
 
-Libre à toi de lire jusqu’au bout, ou de lire tout court d’ailleurs.<br><br>
+        Libre à toi de lire jusqu’au bout, ou de lire tout court d’ailleurs.<br><br>
 
-Si tu ne le veux pas, arrête-toi à cette page et va directement à la 18ème page si je n’ai pas fait de la merde. Je me suis appliqué, normalement ça marche.
-</div></div>
+        Si tu ne le veux pas, arrête-toi à cette page et va directement à la 18ème page.
+
+        <br><br>
+
+        <button class="skip-button" onclick="goToPage(17)">
+            Aller directement à la page 18
+        </button>
+    </div>
+</div>
 
 
 <div class="page"><div class="text">
@@ -341,6 +366,29 @@ function nextPage() {
             music.play().catch(() => {});
         }
     }
+}
+
+function goToPage(index) {
+
+    pages[current].classList.remove("active");
+
+    current = index;
+
+    pages[current].classList.add("active");
+
+    counter.textContent = (current + 1) + " / " + pages.length;
+
+    if (current === pages.length - 1) {
+        arrow.style.display = "none";
+    } else {
+        arrow.style.display = "block";
+    }
+
+    if (current >= 3) {
+        musicButton.style.display = "block";
+        music.play().catch(() => {});
+    }
+
 }
 
 
